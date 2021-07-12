@@ -7,10 +7,7 @@ import pymysql
 import time
 
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
+# 获取网页数据并解析
 def get_data(url):
     try:
         res = requests.get(url)
@@ -40,22 +37,22 @@ def get_data(url):
         thumbnail = collection.getElementsByTagName("thumbnail")[0].childNodes[0].nodeValue
     else:
         thumbnail = ""
-    if len(collection.getElementsByTagName("yearpublished")) != 0\
+    if len(collection.getElementsByTagName("yearpublished")) != 0 \
             and len(collection.getElementsByTagName("yearpublished")[0].childNodes) != 0:
         yearPublished = collection.getElementsByTagName("yearpublished")[0].childNodes[0].nodeValue
     else:
         yearPublished = 1971
-    if len(collection.getElementsByTagName("minplayers")) != 0\
+    if len(collection.getElementsByTagName("minplayers")) != 0 \
             and len(collection.getElementsByTagName("minplayers")[0].childNodes) != 0:
         minPlayers = collection.getElementsByTagName("minplayers")[0].childNodes[0].nodeValue
     else:
         minPlayers = 0
-    if len(collection.getElementsByTagName("maxplayers")) != 0\
+    if len(collection.getElementsByTagName("maxplayers")) != 0 \
             and len(collection.getElementsByTagName("maxplayers")[0].childNodes) != 0:
         maxPlayers = collection.getElementsByTagName("maxplayers")[0].childNodes[0].nodeValue
     else:
         maxPlayers = 0
-    if len(collection.getElementsByTagName("description")) != 0\
+    if len(collection.getElementsByTagName("description")) != 0 \
             and len(collection.getElementsByTagName("description")[0].childNodes) != 0:
         description = collection.getElementsByTagName("description")[0].childNodes[0].nodeValue
     else:
@@ -101,9 +98,10 @@ def get_data(url):
     return data
 
 
+# 插入数据
 def insert_data(data_list):
     # database
-    db = pymysql.connect(host="10.17.0.6", user="root", password="IboTxData5566", database="boardgame", charset='utf8')
+    db = pymysql.connect(host="10.17.0.6", user="root", password="", database="boardgame", charset='utf8')
     cursor = db.cursor()
     try:
         # exe sql
@@ -116,7 +114,7 @@ def insert_data(data_list):
         db.rollback()
 
 
-# Press the green button in the gutter to run the script.
+# 根据循环id获取某个桌游的信息
 if __name__ == '__main__':
     dataList = []
     for i in range(8491, 136300):
